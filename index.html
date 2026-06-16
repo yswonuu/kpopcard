@@ -104,93 +104,84 @@
     <!-- 主視覺牆 -->
     <div class="container text-center hero-section mb-4">
         <h1 class="fw-bold" style="color: #d15a70;">明星小卡專屬選物賣場</h1>
-        <p class="lead">點擊小卡右下角圖示加入購物車，下單請前請先註冊！</p>
+        <p class="lead">點擊小卡右下角圖示加入購物車，下單請點擊右下角懸浮按鈕！</p>
     </div>
 
     <!-- 🌟 商品特區（已完全解放寬度，一排 5 張，完美直立 9:16 比例） -->
     <div class="container mb-5">
         <h3 class="fw-bold mb-3">🌟 現貨周邊特區</h3>
         
-        <!-- row-cols-md-5 平分 5 等分，g-3 控制小卡之間的精緻間距 -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-            
-            <!-- 1. Wonwoo -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg" class="card-img-top product-img" alt="打歌服特典卡">
-                    <div class="card-body d-flex flex-column p-2">
-                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Wonwoo</h6>
-                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">UMS特典卡</p>
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$350</span>
-                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Wonwoodocument.getElementById回歸特典卡', 350)">🛒 加購物車</button>
-                        </div>
-                    </div>
+       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg" class="card-img-top product-img" alt="打歌服特典卡">
+            <div class="card-body d-flex flex-column p-2">
+                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Wonwoo</h6>
+                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">UMS特典卡</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$350</span>
+                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Wonwoo回歸特典卡', 350)">🛒 加購物車</button>
                 </div>
             </div>
-
-            <!-- 2. JK -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg" class="card-img-top product-img" alt="特別視訊會限定卡">
-                    <div class="card-body d-flex flex-column p-2">
-                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">JK</h6>
-                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">簽售特典卡</p>
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$480</span>
-                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('JK簽售特典卡', 480)">🛒 加購物車</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. V -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg" class="card-img-top product-img" alt="演唱會周邊卡">
-                    <div class="card-body d-flex flex-column p-2">
-                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">V</h6>
-                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">世巡入場卡</p>
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$290</span>
-                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('泰亨世巡入場卡', 290)">🛒 加購物車</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. DK -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg" class="card-img-top product-img" alt="快閃店限定卡">
-                    <div class="card-body d-flex flex-column p-2">
-                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">DK</h6>
-                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">周年紀念卡</p>
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
-                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('DK周年紀念卡', 550)">🛒 加購物車</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. Jeonghan -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" class="card-img-top product-img" alt="快閃店限定卡">
-                    <div class="card-body d-flex flex-column p-2">
-                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Jeonghan</h6>
-                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">WVS特典卡</p>
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
-                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Jeonghan-WVS特典卡', 550)">🛒 加購物車</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
+
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg" class="card-img-top product-img" alt="特別視訊會限定卡">
+            <div class="card-body d-flex flex-column p-2">
+                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">JK</h6>
+                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">簽售特典卡</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$480</span>
+                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('JK簽售特典卡', 480)">🛒 加購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg" class="card-img-top product-img" alt="演唱會周邊卡">
+            <div class="card-body d-flex flex-column p-2">
+                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">V</h6>
+                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">世巡入場卡</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$290</span>
+                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('泰亨世巡入場卡', 290)">🛒 加購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg" class="card-img-top product-img" alt="快閃店限定卡">
+            <div class="card-body d-flex flex-column p-2">
+                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">DK</h6>
+                <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">周年紀念卡</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
+                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('DK周年紀念卡', 550)">🛒 加購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" class="card-img-top product-img" alt="快閃店限定卡">
+            <div class="card-body d-flex flex-column p-2">
+                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Jeonghan</h6>
+                <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">WVS特典卡</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
+                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Jeonghan-WVS特典卡', 550)">🛒 加購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- 側邊欄購物車 (Offcanvas) -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
@@ -234,135 +225,128 @@
         </div>
     </div>
 
-    <!-- JavaScript 邏輯區 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const API_URL = 'http://localhost:3000';
-        let currentUser = null;
-        let cart = [];
+    // 1. 設定 Google Sheet 的部署網址
+    const GOOGLE_API_URL = 'https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec'; 
+    let currentUser = null; 
+    let cart = [];
 
-        // 會員登入
-        async function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPwd').value;
-            const res = await fetch(`${API_URL}/api/login`, {
+    // 2. 註冊邏輯
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = { 
+            type: "register", 
+            name: document.getElementById('regName').value, 
+            email: document.getElementById('regEmail').value, 
+            phone: document.getElementById('regphone').value,
+            pwd: document.getElementById('regpwd').value
+        };
+        
+        try {
+            // 這裡依然可以用 no-cors，因為註冊不需要讀取回傳值
+            await fetch(GOOGLE_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            alert("註冊成功！");
+            bootstrap.Modal.getInstance(document.getElementById('regModal')).hide();
+        } catch (err) {
+            alert("連接錯誤，請檢查網路。");
+        }
+    });
+
+    // 3. 正式登入邏輯 (透過 API 比對 Google Sheets)
+    async function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pwd = document.getElementById('loginPwd').value;
+
+        if (!email || !pwd) return alert("請輸入帳號與密碼！");
+
+        try {
+            // 注意：這裡不能用 no-cors，必須讀取結果
+            const response = await fetch(GOOGLE_API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ type: "login", email: email, pwd: pwd })
             });
-            const data = await res.json();
-            alert(data.message);
-            if(data.success) {
-                currentUser = data.user;
-                document.getElementById('auth-zone').className = 'd-none';
-                document.getElementById('user-zone').className = 'd-flex align-items-center gap-3';
-                document.getElementById('current-user-name').innerText = currentUser.name;
-            }
-        }
-
-        // 會員登出
-        function handleLogout() {
-            currentUser = null;
-            document.getElementById('auth-zone').className = 'd-flex gap-2';
-            document.getElementById('user-zone').className = 'd-none';
-            alert("已成功登出會員狀態！");
-        }
-
-        // 會員註冊
-        document.getElementById('regForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
             
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const phone = document.getElementById('regphone').value;
-            const password = document.getElementById('regpwd').value;
+            const result = await response.json(); // 讀取後端回傳的 JSON
 
-            try {
-                const res = await fetch(`${API_URL}/api/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    // 👍 修正：把變數名稱精準對應 phone 與 password
-                    body: JSON.stringify({ email, password, name, phone }) 
-                });
-                const data = await res.json();
-                alert(data.message);
-                if(data.success) {
-                    bootstrap.Modal.getInstance(document.getElementById('regModal')).hide();
-                    document.getElementById('regForm').reset();
-                }
-            } catch (error) {
-                alert("❌ 無法連線至後端伺服器，請確認伺服器已成功啟動！");
-            }
-        });
-
-        // 加入購物車
-        function addToCart(name, price) {
-            const item = cart.find(i => i.name === name);
-            if(item) {
-                item.qty = parseInt(item.qty) + 1; 
+            if (result.success) {
+                currentUser = { name: result.name, email: email };
+                document.getElementById('auth-zone').classList.add('d-none');
+                document.getElementById('user-zone').classList.remove('d-none');
+                document.getElementById('current-user-name').innerText = result.name;
+                alert("登入成功！歡迎回來 " + result.name);
             } else {
-                cart.push({ name: name, price: parseInt(price), qty: 1 }); 
+                alert("❌ 帳號或密碼錯誤！");
             }
-            renderCart();
-            
-            const myOffcanvas = document.getElementById('cartSidebar');
-            const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(myOffcanvas);
-            bsOffcanvas.show();
+        } catch (err) {
+            alert("伺服器連線失敗，請確保後端已部署並允許讀取。");
         }
+    }
 
-        // 渲染購物車
-        function renderCart() {
-            const cartList = document.getElementById('cart-list');
-            const badge = document.getElementById('cart-badge-count');
-            
-            if(cart.length === 0) {
-                cartList.innerHTML = '購物車目前空空如也 🃏';
-                document.getElementById('cart-total').innerText = '0';
-                badge.className = 'cart-badge d-none';
-                return;
-            }
-            
-            let html = '';
-            let total = 0;
-            let totalQty = 0;
-            
-            cart.forEach(i => {
-                html += `
-                    <div class="card p-2 mb-2 bg-white shadow-sm border-0">
-                        <div class="fw-bold text-dark">${i.name}</div>
-                        <div class="d-flex justify-content-between align-items-center mt-1">
-                            <span class="text-muted">數量：<strong>${i.qty}</strong> 張</span>
-                            <span class="text-danger fw-bold">$${i.price * i.qty}</span>
-                        </div>
-                    </div>`;
-                total += i.price * i.qty;
-                totalQty += i.qty;
-            });
-            
-            cartList.innerHTML = html;
-            document.getElementById('cart-total').innerText = total;
-            badge.innerText = totalQty;
-            badge.className = 'cart-badge';
+    function handleLogout() {
+        currentUser = null;
+        document.getElementById('auth-zone').classList.remove('d-none');
+        document.getElementById('user-zone').classList.add('d-none');
+        alert("已登出");
+    }
+
+    // 4. 結帳下單
+    async function checkoutCart() {
+        if(!currentUser) return alert("❌ 請先登入會員！");
+        if(cart.length === 0) return alert("❌ 購物車是空的！");
+
+        await fetch(GOOGLE_API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                type: "order",
+                buyerEmail: currentUser.email, 
+                cartItems: cart, 
+                total: document.getElementById('cart-total').innerText 
+            })
+        });
+        
+        alert("🚀 下單成功！");
+        cart = []; renderCart();
+        bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar')).hide();
+    }
+
+    // 5. 加入購物車功能 (保持不變)
+    function addToCart(name, price) {
+        const item = cart.find(i => i.name === name);
+        if(item) item.qty += 1;
+        else cart.push({ name: name, price: parseInt(price), qty: 1 });
+        renderCart();
+        bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('cartSidebar')).show();
+    }
+
+    function renderCart() {
+        const cartList = document.getElementById('cart-list');
+        const badge = document.getElementById('cart-badge-count');
+        if(cart.length === 0) {
+            cartList.innerHTML = '購物車目前空空如也 🃏';
+            document.getElementById('cart-total').innerText = '0';
+            badge.className = 'cart-badge d-none';
+            return;
         }
-
-        // 結帳下單
-        async function checkoutCart() {
-            if(!currentUser) return alert("❌ 下單失敗：請先在網頁頂端登入您的會員帳號！");
-            if(cart.length === 0) return alert("❌ 購物車內沒有小卡，請先挑選商品！");
-
-            const res = await fetch(`${API_URL}/api/order`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ buyerEmail: currentUser.email, cartItems: cart, total: document.getElementById('cart-total').innerText })
-            });
-            const data = await res.json();
-            alert(data.message);
-            if(data.success) {
-                cart = [];
-                renderCart();
-                bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar')).hide();
-            }
-        }
-    </script>
+        let html = '', total = 0, totalQty = 0;
+        cart.forEach(i => {
+            html += `<div class="card p-2 mb-2 bg-white shadow-sm border-0"><div class="fw-bold">${i.name}</div><div class="d-flex justify-content-between"><span>數量：${i.qty}</span><span class="text-danger">$${i.price * i.qty}</span></div></div>`;
+            total += i.price * i.qty;
+            totalQty += i.qty;
+        });
+        cartList.innerHTML = html;
+        document.getElementById('cart-total').innerText = total;
+        badge.innerText = totalQty;
+        badge.className = 'cart-badge';
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
