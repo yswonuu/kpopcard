@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>🔒 商家小卡機密後台</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">📊 老闆專屬：明星小卡後台收單系統</h2>
+            <button class="btn btn-primary" onclick="fetchAdminData()">🔄 點擊刷新撈取最新數據</button>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm border-0">
+            <h4 class="fw-bold text-primary mb-3">👥 已加入買家會員清單</h4>
+            <table class="table table-hover">
+                <thead class="table-primary"><tr><th>買家姓名</th><th>Email (帳號)</th><th>電話號碼</th><th>設定密碼</th></tr></thead>
+                <tbody id="admin-users-list"></tbody>
+            </table>
+        </div>
+
+        <div class="card p-4 shadow-sm border-0">
+            <h4 class="fw-bold text-success mb-3">📦 買家提交購物車清單明細</h4>
+            <table class="table table-hover">
+                <thead class="table-success"><tr><th>訂單編號</th><th>買家 Email</th><th>購買品項與數量</th><th>訂單總金額</th><th>登記時間</th></tr></thead>
+                <tbody id="admin-orders-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+
+        async function fetchAdminData() {
+            const res = await fetch(`${API_URL}/api/admin/data`);
+            const data = await res.json();
+
+            // 渲染會員
+            const userTable = document.getElementById('admin-users-list');
+            userTable.innerHTML = data.users.length === 0 ? '<tr><td colspan="4" class="text-center text-muted">目前尚無會員</td></tr>' : 
+                data.users.map(u => `<tr><td><b>${u.name}</b></td><td>${u.email}</td><td>${u.phone}</td><td><code>${u.password}</code></td></tr>`).join('');
+
+            // 渲染訂單
+            const orderTable = document.getElementById('admin-orders-list');
+            orderTable.innerHTML = data.orders.length === 0 ? '<tr><td colspan="5" class="text-center text-muted">目前尚無訂單</td></tr>' : 
+                data.orders.map(o => {
+                    const productDetails = o.products.map(p => `${p.name} (x${p.qty})`).join(', ');
+                    return `<tr>
+                        <td><code>${o.id}</code></td>
+                        <td>${o.buyerEmail}</td>
+                        <td class="text-primary fw-bold">${productDetails}</td>
+                        <td class="text-danger fw-bold">$${o.total}</td>
+                        <td><small class="text-muted">${o.date}</small></td>
+                    </tr>`;
+                }).join('');
+        }
+        fetchAdminData();
+    </script>
+</body>
+</html>

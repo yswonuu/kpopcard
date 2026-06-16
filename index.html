@@ -3,364 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 K-POP 夢幻明星真實抽卡機 🌟</title>
+    <title>✨ 明星小卡周邊</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #1f2833;
-            --text-color: #ffffff;
-            --ssr-color: #ff007f;
-            --sr-color: #ffaa00;
-            --r-color: #00d2ff;
-            --n-color: #888888;
+        body { 
+            background-color: #fafdff; 
+            font-family: Arial, sans-serif; 
+        }
+        .navbar { 
+            background-color: #ffffff; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        }
+        .hero-section { 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); 
+            color: #4a4a4a; 
+            padding: 40px 0; 
+            border-radius: 0 0 24px 24px; 
+        }
+        .card { 
+            border: none; 
+            border-radius: 16px; 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05); 
+            background: white; 
+            overflow: hidden;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+        /* 🚀 核心修正：強制讓小卡圖片維持直立 9:16 黃金比例，且保證圖片不壓扁 */
+        .product-img {
+            width: 100%;          
+            aspect-ratio: 9 / 16; /* 完美直立 16:9 比例 */
+            object-fit: cover;    
+            object-position: center; 
         }
 
-        h1 {
-            text-shadow: 0 0 15px rgba(255, 0, 127, 0.7);
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        .subtitle {
-            color: #66fcf1;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .btn-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background: linear-gradient(45deg, #ff007f, #ffaa00);
-            border: none;
+        /* 右下角懸浮購物車按鈕樣式 */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background-color: #ff5b75;
             color: white;
-            padding: 14px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 30px;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 8px 24px rgba(255, 91, 117, 0.4);
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.6);
-        }
-
-        .btn-ten {
-            background: linear-gradient(45deg, #00d2ff, #00fff0);
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
-            color: #000;
-        }
-
-        .btn-ten:hover {
-            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
-        }
-
-        .btn-reveal {
-            background: #ffffff;
-            color: #000;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-            display: none;
-        }
-
-        .btn-reveal:hover {
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-        }
-
-        .tip-text {
-            color: #888888;
-            font-size: 13px;
-            margin-bottom: 20px;
-            height: 20px;
-        }
-
-        /* 卡片網格 */
-        .card-grid {
+            z-index: 1050;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        /* 3D 卡片外殼 */
-        .card-container {
-            width: 230px;
-            height: 350px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        /* 3D 翻轉核心 */
-        .card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: rotateY(180deg);
-        }
-
-        /* 當被加上 .is-flipped 類別時翻轉到正面 */
-        .card.is-flipped {
-            transform: rotateY(0deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 3px solid transparent;
-            box-sizing: border-box;
-        }
-
-        /* 卡片正面 */
-        .card-front {
-            background-color: var(--card-bg);
-            transform: rotateY(0deg);
-        }
-
-        /* 卡片背面 */
-        .card-back {
-            background: linear-gradient(135deg, #15161e 0%, #2c3540 100%);
-            transform: rotateY(180deg);
-            border-color: #4f5d75;
-            justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .card-back::after {
-            content: "✨\nK-POP\nCARD\n✨";
-            white-space: pre-line;
-            text-align: center;
-            font-weight: bold;
-            color: #66fcf1;
-            font-size: 16px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
-        }
-
-        /* 圖片區域 */
-        .card-img-wrapper {
-            width: 100%;
-            height: 82%;
-            position: relative;
-            background-color: #111;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            z-index: 2;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .badge-SSR { background-color: var(--ssr-color); color: white; }
-        .badge-SR  { background-color: var(--sr-color); color: black; }
-        .badge-R   { background-color: var(--r-color); color: black; }
-        .badge-N   { background-color: var(--n-color); color: white; }
-
-        /* 稀有度框線光暈 */
-        .rarity-SSR { border-color: var(--ssr-color); box-shadow: 0 0 20px rgba(255, 0, 127, 0.6); }
-        .rarity-SR  { border-color: var(--sr-color); box-shadow: 0 0 15px rgba(255, 170, 0, 0.5); }
-        .rarity-R   { border-color: var(--r-color); box-shadow: 0 0 15px rgba(0, 210, 255, 0.4); }
-        .rarity-N   { border-color: var(--n-color); }
-
-        /* 下半部文字區 */
-        .card-info {
-            padding: 8px 12px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
             justify-content: center;
-            background: linear-gradient(to bottom, #1f2833, #151a21);
+            font-size: 26px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .floating-cart-btn:hover {
+            transform: scale(1.1);
+            background-color: #e04860;
         }
 
-        .group-name {
-            font-size: 10px;
-            color: #66fcf1;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        /* 購物車數字小紅點 */
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ffffff;
+            color: #ff5b75;
+            border: 2px solid #ff5b75;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 12px;
             font-weight: bold;
-            margin-bottom: 2px;
         }
 
-        .member-name {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        /* 側邊欄專屬粉嫩樣式 */
+        .offcanvas-body {
+            background-color: #fff8f9;
         }
     </style>
 </head>
 <body>
 
-    <h1>🎴 K-POP 夢幻明星卡池 🎴</h1>
-    <div class="subtitle">親手翻開屬於你的專屬小卡，快叫朋友來拼手氣！</div>
+    <!-- 頂部導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold fs-4 text-danger" href="#">✨ 小卡專賣店</a>
+            
+            <div id="auth-zone" class="d-flex gap-2">
+                <input type="email" id="loginEmail" class="form-control form-control-sm" placeholder="Email" style="width:150px;">
+                <input type="password" id="loginPwd" class="form-control form-control-sm" placeholder="密碼" style="width:120px;">
+                <button class="btn btn-sm btn-outline-primary" onclick="handleLogin()">會員登入</button>
+                <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#regModal">註冊</button>
+            </div>
+            <div id="user-zone" class="d-none align-items-center gap-3">
+                <span class="fw-bold text-success">🟢 已登入：<span id="current-user-name"></span></span>
+                <button class="btn btn-sm btn-secondary" onclick="handleLogout()">登出</button>
+            </div>
+        </div>
+    </nav>
 
-    <div class="btn-container">
-        <button onclick="drawCard(1)">單抽試手氣</button>
-        <button class="btn-ten" onclick="drawCard(10)">不重複十連抽！</button>
-        <button id="revealBtn" class="btn-reveal" onclick="revealAllCards()">一鍵全翻開</button>
+    <!-- 主視覺牆 -->
+    <div class="container text-center hero-section mb-4">
+        <h1 class="fw-bold" style="color: #d15a70;">明星小卡專屬選物賣場</h1>
+        <p class="lead">點擊小卡右下角圖示加入購物車，下單請點擊右下角懸浮按鈕！</p>
     </div>
 
-    <div class="tip-text" id="tipText"></div>
-
-    <div class="card-grid" id="displayArea"></div>
-
-    <script>
-        // 原始卡池基礎資料[cite: 2]
-        const baseCards = [
-            { id: 1, rarity: "SSR", group: "BTS", name: "柾國 (Jung Kook)", img: "https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg"}, //[cite: 2]
-            { id: 2, rarity: "SSR", group: "SEVENTEEN", name: "淨漢 (Jeonghan)", img: "https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" }, //[cite: 2]
-            { id: 3, rarity: "SSR", group: "BTS", name: "泰亨 (V)", img: "https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg"}, //[cite: 2]
-            { id: 4, rarity: "SSR", group: "BTS", name: "碩珍 (Jin)", img: "https://i.pinimg.com/736x/42/b5/cf/42b5cfcd98a5bc7354ce6a8748258c1b.jpg"}, //[cite: 2]
-            { id: 5, rarity: "SSR", group: "SEVENTEEN", name: "碩珉 (DK)", img: "https://i.pinimg.com/1200x/ed/5d/fa/ed5dfa3f078793a8dbddc5c4337bf52e.jpg"}, //[cite: 2]
-            { id: 6, rarity: "SR",  group: "BTS", name: "泰亨 (V)", img: "https://i.pinimg.com/736x/56/f5/2f/56f52fed1d4d5d82ddb75a551b1128e5.jpg"}, //[cite: 2]
-            { id: 7, rarity: "SR",  group: "BTS", name: "柾國 (Jung Kook)", img: "https://i.pinimg.com/736x/ca/6f/02/ca/ca6f02ac17237aa0ca046f177a40920b.jpg"}, //[cite: 2]
-            { id: 8, rarity: "SR",  group: "SEVENTEEN", name: "淨漢 (Jeonghan)", img: "https://i.pinimg.com/1200x/6e/d7/54/6ed7541da0346dbccf421b6af7457dcc.jpg"}, //[cite: 2]
-            { id: 9, rarity: "SR",  group: "SEVENTEEN", name: "圓佑 (Wonwoo)", img: "https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg"}, //[cite: 2]
-            { id: 10, rarity: "SR", group: "SEVENTEEN", name: "碩珉 (DK)", img: "https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg"}, //[cite: 2]
-            { id: 11, rarity: "SR",   group: "SEVENTEEN", name: "珉奎 (Mingyu)", img: "https://i.pinimg.com/736x/65/1c/73/651c734281e9c4ba4def3ef07553de28.jpg"}, //[cite: 2]
-            { id: 11, rarity: "R",   group: "SEVENTEEN", name: "珉奎 (Mingyu)", img: "https://i.pinimg.com/736x/78/dd/75/78dd757e93f2ef197414353c43822221.jpg"}, //[cite: 2]
-            { id: 12, rarity: "R",   group: "SEVENTEEN", name: "順榮 (Hoshi)", img: "https://i.pinimg.com/736x/c4/4f/5e/c44f5e8c8f4044fd8a7195ffb894b5f9.jpg"}, //[cite: 2]
-            { id: 13, rarity: "R",   group: "SEVENTEEN", name: "圓佑 (Wonwoo)", img: "https://i.pinimg.com/1200x/ab/ac/2b/abac2bfd3e0c00a2fa7d31397a05ef61.jpg"}, //[cite: 2]
-            { id: 14, rarity: "R",   group: "BTS", name: "泰亨 (V)", img: "https://i.pinimg.com/736x/41/ae/33/41ae3351f21f0d4bba407999fb56c6b4.jpg"}, //[cite: 2]
-            { id: 15, rarity: "N",  group: "SEVENTEEN", name: "勝寛", img: "https://i.pinimg.com/736x/74/bd/9d/74bd9d678bfc52b554d6aecb0192f5f2.jpg"}, //[cite: 2]
-            { id: 16, rarity: "N",   group: "SEVENTEEN", name: "順榮 (Hoshi)", img: "https://i.pinimg.com/1200x/ca/f3/40/caf3403c821c66d47b9ceab1f5bd4ece.jpg"}, //[cite: 2]
-            { id: 17, rarity: "N",   group: "SEVENTEEN", name: "珉奎 (Mingyu)", img: "https://i.pinimg.com/736x/02/9f/c0/029fc00641c9b23931cf5815b1ae991a.jpg"}, //[cite: 2]
-            { id: 18, rarity: "N",   group: "SEVENTEEN", name: "碩珉 (DK)", img: "https://i.pinimg.com/736x/37/97/8f/37978f70a060d7dbb525c8e07cec364b.jpg"}, //[cite: 2]
-        ];
-
-        // 隨機洗牌演算法
-        function shufflePool(array) {
-            let shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
-
-        function drawCard(times) {
-            const displayArea = document.getElementById("displayArea");
-            const revealBtn = document.getElementById("revealBtn");
-            const tipText = document.getElementById("tipText");
+    <!-- 🌟 商品特區（已完全解放寬度，一排 5 張，完美直立 9:16 比例） -->
+    <div class="container mb-5">
+        <h3 class="fw-bold mb-3">🌟 現貨周邊特區</h3>
+        
+        <!-- row-cols-md-5 平分 5 等分，g-3 控制小卡之間的精緻間距 -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
             
-            displayArea.innerHTML = ""; 
-            tipText.innerText = "點擊卡片即可單獨翻開！";
-            revealBtn.style.display = "inline-block";
-
-            let results = [];
-
-            if (times === 1) {
-                // 單抽：維持完全隨機
-                const randomIndex = Math.floor(Math.random() * baseCards.length);
-                results.push(baseCards[randomIndex]);
-            } else {
-                // 十連抽：限制最多 1 張 SSR，且最多 2 張 SR
-                let shuffledPool = shufflePool(baseCards);
-                let ssrCount = 0;
-                let srCount = 0;
-
-                for (let i = 0; i < shuffledPool.length; i++) {
-                    if (results.length >= 10) break; // 抽滿 10 張就停
-
-                    const currentCard = shuffledPool[i];
-
-                    if (currentCard.rarity === "SSR") {
-                        if (ssrCount < 1) {
-                            results.push(currentCard);
-                            ssrCount++;
-                        }
-                    } else if (currentCard.rarity === "SR") {
-                        if (srCount < 2) {
-                            results.push(currentCard);
-                            srCount++;
-                        }
-                    } else {
-                        // R 或 N 卡正常放入
-                        results.push(currentCard);
-                    }
-                }
-            }
-
-            // 渲染卡片 HTML
-            results.forEach((cardData, i) => {
-                const cardContainer = document.createElement("div");
-                cardContainer.className = "card-container";
-                
-                cardContainer.onclick = function() {
-                    const cardInner = this.querySelector('.card');
-                    cardInner.classList.toggle('is-flipped');
-                };
-
-                cardContainer.innerHTML = `
-                    <div class="card">
-                        <!-- 卡片正面 -->
-                        <div class="card-face card-front rarity-${cardData.rarity}">
-                            <div class="card-img-wrapper">
-                                <span class="badge badge-${cardData.rarity}">${cardData.rarity}</span>
-                                <img class="card-img" src="${cardData.img}" alt="${cardData.name}">
-                            </div>
-                            <div class="card-info">
-                                <div class="group-name">${cardData.group}</div>
-                                <div class="member-name">${cardData.name}</div>
-                            </div>
+            <!-- 1. Wonwoo -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg" class="card-img-top product-img" alt="打歌服特典卡">
+                    <div class="card-body d-flex flex-column p-2">
+                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Wonwoo</h6>
+                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">UMS特典卡</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$350</span>
+                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Wonwoodocument.getElementById回歸特典卡', 350)">🛒 加購物車</button>
                         </div>
-                        <!-- 卡片背面 -->
-                        <div class="card-face card-back"></div>
                     </div>
-                `;
-                displayArea.appendChild(cardContainer);
+                </div>
+            </div>
+
+            <!-- 2. JK -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg" class="card-img-top product-img" alt="特別視訊會限定卡">
+                    <div class="card-body d-flex flex-column p-2">
+                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">JK</h6>
+                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">簽售特典卡</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$480</span>
+                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('JK簽售特典卡', 480)">🛒 加購物車</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. V -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg" class="card-img-top product-img" alt="演唱會周邊卡">
+                    <div class="card-body d-flex flex-column p-2">
+                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">V</h6>
+                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">世巡入場卡</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$290</span>
+                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('泰亨世巡入場卡', 290)">🛒 加購物車</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. DK -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg" class="card-img-top product-img" alt="快閃店限定卡">
+                    <div class="card-body d-flex flex-column p-2">
+                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">DK</h6>
+                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">周年紀念卡</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
+                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('DK周年紀念卡', 550)">🛒 加購物車</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Jeonghan -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" class="card-img-top product-img" alt="快閃店限定卡">
+                    <div class="card-body d-flex flex-column p-2">
+                        <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Jeonghan</h6>
+                        <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">WVS特典卡</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
+                            <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Jeonghan-WVS特典卡', 550)">🛒 加購物車</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 側邊欄購物車 (Offcanvas) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
+        <div class="offcanvas-header bg-danger text-white">
+            <h5 class="offcanvas-title fw-bold" id="cartSidebarLabel">🛒 我的秘密購物車</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+            <div id="cart-list" class="flex-grow-1 text-muted small">
+                購物車目前空空如也 🃏
+            </div>
+            <div class="mt-auto border-top pt-3">
+                <div class="d-flex justify-content-between fw-bold fs-5 text-dark mb-3">
+                    <span>總計金額:</span>
+                    <span class="text-danger">$<span id="cart-total">0</span></span>
+                </div>
+                <button class="btn btn-danger w-100 py-2 fw-bold fs-6" onclick="checkoutCart()">🚀 確認下單提交</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角懸浮購物車按鈕 -->
+    <button class="floating-cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar" aria-controls="cartSidebar">
+        🛒
+        <span id="cart-badge-count" class="cart-badge d-none">0</span>
+    </button>
+
+    <!-- 買家註冊 Modal -->
+    <div class="modal fade" id="regModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content p-3">
+                <h4 class="fw-bold text-center mb-3">📝 買家註冊</h4>
+                <form id="regForm">
+                    <div class="mb-2"><input type="text" id="regName" class="form-control" placeholder="買家暱稱" required></div>
+                    <div class="mb-2"><input type="email" id="regEmail" class="form-control" placeholder="Email (帳號)" required></div>
+                    <div class="mb-2"><input type="tel" id="regphone" class="form-control" placeholder="手機號碼" required></div>
+                    <div class="mb-3"><input type="password" id="regpwd" class="form-control" placeholder="密碼設定" required></div>
+                    <button type="submit" class="btn btn-primary w-100">送出註冊</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 邏輯區 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000';
+        let currentUser = null;
+        let cart = [];
+
+        // 會員登入
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPwd').value;
+            const res = await fetch(`${API_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
             });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) {
+                currentUser = data.user;
+                document.getElementById('auth-zone').className = 'd-none';
+                document.getElementById('user-zone').className = 'd-flex align-items-center gap-3';
+                document.getElementById('current-user-name').innerText = currentUser.name;
+            }
         }
 
-        function revealAllCards() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.classList.add('is-flipped');
+        // 會員登出
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('auth-zone').className = 'd-flex gap-2';
+            document.getElementById('user-zone').className = 'd-none';
+            alert("已成功登出會員狀態！");
+        }
+
+        // 會員註冊
+        document.getElementById('regForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regphone').value;
+            const password = document.getElementById('regpwd').value;
+
+            try {
+                const res = await fetch(`${API_URL}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    // 👍 修正：把變數名稱精準對應 phone 與 password
+                    body: JSON.stringify({ email, password, name, phone }) 
+                });
+                const data = await res.json();
+                alert(data.message);
+                if(data.success) {
+                    bootstrap.Modal.getInstance(document.getElementById('regModal')).hide();
+                    document.getElementById('regForm').reset();
+                }
+            } catch (error) {
+                alert("❌ 無法連線至後端伺服器，請確認伺服器已成功啟動！");
+            }
+        });
+
+        // 加入購物車
+        function addToCart(name, price) {
+            const item = cart.find(i => i.name === name);
+            if(item) {
+                item.qty = parseInt(item.qty) + 1; 
+            } else {
+                cart.push({ name: name, price: parseInt(price), qty: 1 }); 
+            }
+            renderCart();
+            
+            const myOffcanvas = document.getElementById('cartSidebar');
+            const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(myOffcanvas);
+            bsOffcanvas.show();
+        }
+
+        // 渲染購物車
+        function renderCart() {
+            const cartList = document.getElementById('cart-list');
+            const badge = document.getElementById('cart-badge-count');
+            
+            if(cart.length === 0) {
+                cartList.innerHTML = '購物車目前空空如也 🃏';
+                document.getElementById('cart-total').innerText = '0';
+                badge.className = 'cart-badge d-none';
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            let totalQty = 0;
+            
+            cart.forEach(i => {
+                html += `
+                    <div class="card p-2 mb-2 bg-white shadow-sm border-0">
+                        <div class="fw-bold text-dark">${i.name}</div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <span class="text-muted">數量：<strong>${i.qty}</strong> 張</span>
+                            <span class="text-danger fw-bold">$${i.price * i.qty}</span>
+                        </div>
+                    </div>`;
+                total += i.price * i.qty;
+                totalQty += i.qty;
             });
+            
+            cartList.innerHTML = html;
+            document.getElementById('cart-total').innerText = total;
+            badge.innerText = totalQty;
+            badge.className = 'cart-badge';
+        }
+
+        // 結帳下單
+        async function checkoutCart() {
+            if(!currentUser) return alert("❌ 下單失敗：請先在網頁頂端登入您的會員帳號！");
+            if(cart.length === 0) return alert("❌ 購物車內沒有小卡，請先挑選商品！");
+
+            const res = await fetch(`${API_URL}/api/order`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ buyerEmail: currentUser.email, cartItems: cart, total: document.getElementById('cart-total').innerText })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) {
+                cart = [];
+                renderCart();
+                bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar')).hide();
+            }
         }
     </script>
 </body>
