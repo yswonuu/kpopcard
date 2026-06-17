@@ -28,15 +28,42 @@
             overflow: hidden;
         }
 
-        /* 🚀 核心修正：強制讓小卡圖片維持直立 9:16 黃金比例，且保證圖片不壓扁 */
-        .product-img {
-            width: 100%;          
-            aspect-ratio: 9 / 16; /* 完美直立 16:9 比例 */
-            object-fit: cover;    
-            object-position: center; 
+        .product-img-wrapper{
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2 / 3;   /* 小卡比例 */
+            overflow: hidden;
         }
 
-        /* 右下角懸浮購物車按鈕樣式 */
+        .product-img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width:768px){
+            .product-img-wrapper{
+                aspect-ratio: 2 / 3;
+            }
+        }
+        #cart-list .card {
+            font-size: 0.9rem;
+            padding: 10px !important;
+        }
+
+        #cartSidebar .offcanvas-body {
+            font-size: 1rem;
+        }
+
+        #cartSidebar .offcanvas-title {
+            font-size: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem !important;
+        }
+
         .floating-cart-btn {
             position: fixed;
             bottom: 30px;
@@ -61,7 +88,6 @@
             background-color: #e04860;
         }
 
-        /* 購物車數字小紅點 */
         .cart-badge {
             position: absolute;
             top: -2px;
@@ -75,7 +101,6 @@
             font-weight: bold;
         }
 
-        /* 側邊欄專屬粉嫩樣式 */
         .offcanvas-body {
             background-color: #fff8f9;
         }
@@ -83,7 +108,6 @@
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand fw-bold fs-4 text-danger" href="#">✨ 小卡專賣店</a>
@@ -101,89 +125,89 @@
         </div>
     </nav>
 
-    <!-- 主視覺牆 -->
     <div class="container text-center hero-section mb-4">
         <h1 class="fw-bold" style="color: #d15a70;">明星小卡專屬選物賣場</h1>
         <p class="lead">點擊小卡右下角圖示加入購物車，下單請點擊右下角懸浮按鈕！</p>
     </div>
 
-    <!-- 🌟 商品特區（已完全解放寬度，一排 5 張，完美直立 9:16 比例） -->
     <div class="container mb-5">
-        <h3 class="fw-bold mb-3">🌟 現貨周邊特區</h3>
+    <h3 class="fw-bold mb-3">🌟 現貨區</h3>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
         
-       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg" class="card-img-top product-img" alt="打歌服特典卡">
-            <div class="card-body d-flex flex-column p-2">
-                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Wonwoo</h6>
-                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">UMS特典卡</p>
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$350</span>
-                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Wonwoo回歸特典卡', 350)">🛒 加購物車</button>
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-img-wrapper"><img src="https://i.pinimg.com/736x/14/fa/4c/14fa4c988aec277da04ce9392ce97e32.jpg" class="product-img" alt="Wonwoo"></div>
+                <div class="card-body d-flex flex-column p-2">
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Wonwoo</h6>
+                    <p class="text-muted flex-grow-1 mb-2" style="font-size: 12px;">UMS特典卡</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-danger">$350</span>
+                        <button class="btn btn-sm btn-primary" onclick="addToCart('Wonwoo回歸特典卡', 350)">🛒</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg" class="card-img-top product-img" alt="特別視訊會限定卡">
-            <div class="card-body d-flex flex-column p-2">
-                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">JK</h6>
-                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">簽售特典卡</p>
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$480</span>
-                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('JK簽售特典卡', 480)">🛒 加購物車</button>
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-img-wrapper"><img src="https://i.pinimg.com/736x/30/87/21/3087214f40165a25e18ee79ca57170e6.jpg" class="product-img" alt="JK"></div>
+                <div class="card-body d-flex flex-column p-2">
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">JK</h6>
+                    <p class="text-muted flex-grow-1 mb-2" style="font-size: 12px;">簽售特典卡</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-danger">$480</span>
+                        <button class="btn btn-sm btn-primary" onclick="addToCart('JK簽售特典卡', 480)">🛒</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg" class="card-img-top product-img" alt="演唱會周邊卡">
-            <div class="card-body d-flex flex-column p-2">
-                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">V</h6>
-                <p class="text-muted flex-grow-1 mb-2" style="font-size: 11px;">世巡入場卡</p>
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$290</span>
-                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('泰亨世巡入場卡', 290)">🛒 加購物車</button>
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-img-wrapper"><img src="https://i.pinimg.com/1200x/f1/a1/8a/f1a18aa1e340c10c44614b74780d565e.jpg" class="product-img" alt="V"></div>
+                <div class="card-body d-flex flex-column p-2">
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">V</h6>
+                    <p class="text-muted flex-grow-1 mb-2" style="font-size: 12px;">世巡入場卡</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-danger">$290</span>
+                        <button class="btn btn-sm btn-primary" onclick="addToCart('泰亨世巡入場卡', 290)">🛒</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg" class="card-img-top product-img" alt="快閃店限定卡">
-            <div class="card-body d-flex flex-column p-2">
-                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">DK</h6>
-                <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">周年紀念卡</p>
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
-                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('DK周年紀念卡', 550)">🛒 加購物車</button>
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-img-wrapper"><img src="https://i.pinimg.com/736x/37/55/b9/3755b931cef706b327dda12c83395e2f.jpg" class="product-img" alt="DK"></div>
+                <div class="card-body d-flex flex-column p-2">
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">DK</h6>
+                    <p class="text-muted flex-grow-1 mb-2" style="font-size: 12px;">周年紀念卡</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-danger">$550</span>
+                        <button class="btn btn-sm btn-primary" onclick="addToCart('DK周年紀念卡', 550)">🛒</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" class="card-img-top product-img" alt="快閃店限定卡">
-            <div class="card-body d-flex flex-column p-2">
-                <h6 class="fw-bold mb-1" style="font-size: 11.5px; line-height: 1.3;">Jeonghan</h6>
-                <p class="text-muted flex-grow-1 mb-2" style="font-size: 10px;">WVS特典卡</p>
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="fw-bold text-danger" style="font-size: 12.5px;">$550</span>
-                    <button class="btn btn-sm btn-primary" style="font-size: 9.5px; padding: 1px 4px;" onclick="addToCart('Jeonghan-WVS特典卡', 550)">🛒 加購物車</button>
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-img-wrapper"><img src="https://i.pinimg.com/1200x/18/e4/56/18e456c39bffa1aa2ef7ca8ce3ab8462.jpg" class="product-img" alt="Jeonghan"></div>
+                <div class="card-body d-flex flex-column p-2">
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Jeonghan</h6>
+                    <p class="text-muted flex-grow-1 mb-2" style="font-size: 12px;">WVS特典卡</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-danger">$550</span>
+                        <button class="btn btn-sm btn-primary" onclick="addToCart('Jeonghan-WVS特典卡', 550)">🛒</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-    <!-- 側邊欄購物車 (Offcanvas) -->
+    </div>
+
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
         <div class="offcanvas-header bg-danger text-white">
             <h5 class="offcanvas-title fw-bold" id="cartSidebarLabel">🛒 我的秘密購物車</h5>
@@ -203,13 +227,11 @@
         </div>
     </div>
 
-    <!-- 右下角懸浮購物車按鈕 -->
     <button class="floating-cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar" aria-controls="cartSidebar">
         🛒
         <span id="cart-badge-count" class="cart-badge d-none">0</span>
     </button>
 
-    <!-- 買家註冊 Modal -->
     <div class="modal fade" id="regModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content p-3">
@@ -224,14 +246,14 @@
             </div>
         </div>
     </div>
-
+</div>
     <script>
-    // 1. 設定 Google Sheet 的部署網址
+
     const GOOGLE_API_URL = 'https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec'; 
     let currentUser = null; 
     let cart = [];
 
-    // 2. 註冊邏輯
+
     document.getElementById('regForm').addEventListener('submit', async (e) => {
 
     e.preventDefault();
@@ -266,7 +288,6 @@
 
 });
 
-    // 3. 正式登入邏輯 (透過 API 比對 Google Sheets)
     async function handleLogin() {
 
     const email = document.getElementById('loginEmail').value;
@@ -339,7 +360,6 @@
         bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar')).hide();
     }
 
-    // 5. 加入購物車功能 (保持不變)
     function addToCart(name, price) {
         const item = cart.find(i => i.name === name);
         if(item) item.qty += 1;
