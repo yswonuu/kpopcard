@@ -233,61 +233,82 @@
 
     // 2. 註冊邏輯
     document.getElementById('regForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const data = { 
-            type: "register", 
-            name: document.getElementById('regName').value, 
-            email: document.getElementById('regEmail').value, 
-            phone: document.getElementById('regphone').value,
-            pwd: document.getElementById('regpwd').value
-        };
-        
-        try {
-            // 這裡依然可以用 no-cors，因為註冊不需要讀取回傳值
-            await fetch(GOOGLE_API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            alert("註冊成功！");
-            bootstrap.Modal.getInstance(document.getElementById('regModal')).hide();
-        } catch (err) {
-            alert("連接錯誤，請檢查網路。");
-        }
-    });
+
+    e.preventDefault();
+
+    const formData = new URLSearchParams();
+
+    formData.append("type","register");
+    formData.append("name",document.getElementById('regName').value);
+    formData.append("email",document.getElementById('regEmail').value);
+    formData.append("phone",document.getElementById('regphone').value);
+    formData.append("pwd",document.getElementById('regpwd').value);
+
+    try {
+
+        await fetch(GOOGLE_API_URL,{
+            method:"POST",
+            body:formData
+        });
+
+        alert("註冊成功！");
+
+        bootstrap.Modal
+            .getInstance(document.getElementById('regModal'))
+            .hide();
+
+    } catch(err){
+
+        console.error(err);
+        alert("註冊失敗");
+
+    }
+
+});
 
     // 3. 正式登入邏輯 (透過 API 比對 Google Sheets)
     async function handleLogin() {
-        const email = document.getElementById('loginEmail').value;
-        const pwd = document.getElementById('loginPwd').value;
 
-        if (!email || !pwd) return alert("請輸入帳號與密碼！");
+    const email = document.getElementById('loginEmail').value;
+    const pwd = document.getElementById('loginPwd').value;
 
-        try {
-            // 在 handleLogin 函式內：
-            const response = await fetch(GOOGLE_API_URL, {
-                method: 'POST',
-                mode: 'cors', // 務必設為 'cors'
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: "login", email: email, pwd: pwd })
-            });
-            
-            const result = await response.json(); // 讀取後端回傳的 JSON
+    const formData = new URLSearchParams();
 
-            if (result.success) {
-                currentUser = { name: result.name, email: email };
-                document.getElementById('auth-zone').classList.add('d-none');
-                document.getElementById('user-zone').classList.remove('d-none');
-                document.getElementById('current-user-name').innerText = result.name;
-                alert("登入成功！歡迎回來 " + result.name);
-            } else {
-                alert("❌ 帳號或密碼錯誤！");
-            }
-        } catch (err) {
-            alert("伺服器連線失敗，請確保後端已部署並允許讀取。");
+    formData.append("type", "login");
+    formData.append("email", email);
+    formData.append("pwd", pwd);
+
+    try {
+
+        const response = await fetch(GOOGLE_API_URL, {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if(result.success){
+
+            currentUser = {
+                name: result.name,
+                email: email
+            };
+
+            document.getElementById('auth-zone').classList.add('d-none');
+            document.getElementById('user-zone').classList.remove('d-none');
+            document.getElementById('current-user-name').innerText = result.name;
+
+            alert("登入成功");
+
+        }else{
+            alert(result.message);
         }
+
+    }catch(err){
+        console.error(err);
+        alert("登入失敗");
     }
+}
 
     function handleLogout() {
         currentUser = null;
@@ -301,17 +322,17 @@
         if(!currentUser) return alert("❌ 請先登入會員！");
         if(cart.length === 0) return alert("❌ 購物車是空的！");
 
-        await fetch(GOOGLE_API_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                type: "order",
-                buyerEmail: currentUser.email, 
-                cartItems: cart, 
-                total: document.getElementById('cart-total').innerText 
-            })
-        });
+        const formData = new URLSearchParams();
+
+            formData.append("type","order");
+            formData.append("buyerEmail",currentUser.email);
+            formData.append("cartItems",JSON.stringify(cart));
+            formData.append("total",document.getElementById('cart-total').innerText);
+
+            await fetch(GOOGLE_API_URL,{
+                method:"POST",
+                body:formData
+            });
         
         alert("🚀 下單成功！");
         cart = []; renderCart();
