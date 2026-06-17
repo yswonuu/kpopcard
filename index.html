@@ -6,103 +6,171 @@
     <title>✨ 明星小卡周邊</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { 
-            background-color: #fafdff; 
-            font-family: Arial, sans-serif; 
-        }
-        .navbar { 
-            background-color: #ffffff; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-        }
-        .hero-section { 
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); 
-            color: #4a4a4a; 
-            padding: 40px 0; 
-            border-radius: 0 0 24px 24px; 
-        }
-        .card { 
-            border: none; 
-            border-radius: 16px; 
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05); 
-            background: white; 
-            overflow: hidden;
+        body {
+            background-color: #fafdff;
+            font-family: Arial, sans-serif;
         }
 
-        .product-img-wrapper{
-            position: relative;
-            width: 100%;
-            aspect-ratio: 2 / 3;   /* 小卡比例 */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #4a4a4a;
+            padding: 40px 0;
+            border-radius: 0 0 24px 24px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+            background: white;
             overflow: hidden;
+            height: 100%;
+            transition: .2s;
+        }
+
+        .card:hover{
+            transform: translateY(-3px);
+        }
+
+        /* ===== 商品圖片 ===== */
+        .product-img-wrapper{
+            width:100%;
+            aspect-ratio:2 / 3;     /* 小卡比例 */
+            overflow:hidden;
+            background:#f5f5f5;
         }
 
         .product-img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
         }
 
+        /* ===== 手機版 ===== */
         @media (max-width:768px){
-            .product-img-wrapper{
-                aspect-ratio: 2 / 3;
+
+            .hero-section{
+                padding:25px 15px;
+            }
+
+            .hero-section h1{
+                font-size:1.7rem;
+            }
+
+            .hero-section p{
+                font-size:0.95rem;
+            }
+
+            .card-body{
+                padding:10px !important;
+            }
+
+            .card h6{
+                font-size:14px !important;
+            }
+
+            .card p{
+                font-size:12px !important;
+            }
+
+            .btn{
+                font-size:12px;
+                padding:4px 8px !important;
+            }
+
+            .floating-cart-btn{
+                width:58px;
+                height:58px;
+                font-size:22px;
+                right:18px;
+                bottom:18px;
+            }
+
+            .cart-badge{
+                font-size:11px;
+                padding:2px 6px;
+            }
+
+            #cartSidebar{
+                width:90%;
+            }
+
+            #cartSidebar .offcanvas-title{
+                font-size:1.1rem;
+            }
+
+            #cartSidebar .offcanvas-body{
+                font-size:0.95rem;
+            }
+
+            #cart-list .card{
+                font-size:0.85rem;
+                padding:8px !important;
             }
         }
-        #cart-list .card {
-            font-size: 0.9rem;
-            padding: 10px !important;
+
+        /* ===== 購物車 ===== */
+
+        #cart-list .card{
+            font-size:0.9rem;
+            padding:10px !important;
         }
 
-        #cartSidebar .offcanvas-body {
-            font-size: 1rem;
+        #cartSidebar .offcanvas-body{
+            background:#fff8f9;
+            font-size:1rem;
         }
 
-        #cartSidebar .offcanvas-title {
-            font-size: 1.25rem;
+        #cartSidebar .offcanvas-title{
+            font-size:1.25rem;
         }
 
-        .btn {
-            padding: 0.5rem 1rem !important;
+        .btn{
+            padding:.5rem 1rem !important;
         }
 
-        .floating-cart-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background-color: #ff5b75;
-            color: white;
-            border-radius: 50%;
-            border: none;
-            box-shadow: 0 8px 24px rgba(255, 91, 117, 0.4);
-            cursor: pointer;
-            z-index: 1050;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .floating-cart-btn:hover {
-            transform: scale(1.1);
-            background-color: #e04860;
+        .floating-cart-btn{
+            position:fixed;
+            bottom:30px;
+            right:30px;
+            width:65px;
+            height:65px;
+            background:#ff5b75;
+            color:#fff;
+            border:none;
+            border-radius:50%;
+            box-shadow:0 8px 24px rgba(255,91,117,.4);
+            cursor:pointer;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:26px;
+            z-index:1050;
+            transition:.2s;
         }
 
-        .cart-badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background-color: #ffffff;
-            color: #ff5b75;
-            border: 2px solid #ff5b75;
-            border-radius: 50%;
-            padding: 2px 7px;
-            font-size: 12px;
-            font-weight: bold;
+        .floating-cart-btn:hover{
+            transform:scale(1.08);
+            background:#e04860;
         }
 
-        .offcanvas-body {
-            background-color: #fff8f9;
+        .cart-badge{
+            position:absolute;
+            top:-2px;
+            right:-2px;
+            background:#fff;
+            color:#ff5b75;
+            border:2px solid #ff5b75;
+            border-radius:50%;
+            font-size:12px;
+            font-weight:bold;
+            padding:2px 7px;
         }
     </style>
 </head>
@@ -127,13 +195,13 @@
 
     <div class="container text-center hero-section mb-4">
         <h1 class="fw-bold" style="color: #d15a70;">明星小卡專屬選物賣場</h1>
-        <p class="lead">點擊小卡右下角圖示加入購物車，下單請點擊右下角懸浮按鈕！</p>
+        <p class="lead">點擊小卡右下角圖示加入購物車，下單前請先登入！</p>
     </div>
 
     <div class="container mb-5">
     <h3 class="fw-bold mb-3">🌟 現貨區</h3>
     
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+    <div class="row row-cols-2 row-cols-md-5 g-3">
         
         <div class="col">
             <div class="card h-100">
