@@ -267,7 +267,7 @@
         try {
             // 注意：這裡不能用 no-cors，必須讀取結果
             const response = await fetch(GOOGLE_API_URL, {
-                method: 'POST',
+                method: 'cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: "login", email: email, pwd: pwd })
             });
