@@ -3,139 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ 明星小卡周邊</title>
+    <title>✨ 小卡商店</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #fafdff;
-            font-family: Arial, sans-serif;
-        }
+    body{
+        background:#fafdff;
+        font-family:Arial;
+    }
 
-        .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+    .navbar{
+        background:#fff;
+        box-shadow:0 2px 4px rgba(0,0,0,.05);
+    }
 
-        .hero-section {
-            background: linear-gradient(135deg,#ff9a9e,#fecfef);
-            padding: 40px 0;
-            border-radius: 0 0 24px 24px;
-        }
+    /* 商品卡 */
+    .card{
+        border:none;
+        border-radius:16px;
+        box-shadow:0 6px 12px rgba(0,0,0,.05);
+        overflow:hidden;
+        height:100%;
+    }
 
-        /* 卡片 */
-        .card{
-            border:none;
-            border-radius:16px;
-            box-shadow:0 6px 12px rgba(0,0,0,0.05);
-            overflow:hidden;
-            height:100%;
-            transition:.2s;
-        }
-        .card:hover{ transform:translateY(-3px); }
+    .product-img-wrapper{
+        aspect-ratio:2/3;
+        overflow:hidden;
+    }
 
-        /* 小卡比例 */
-        .product-img-wrapper{
-            width:100%;
-            aspect-ratio:2/3;
-            overflow:hidden;
-        }
-        .product-img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-        }
+    .product-img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
 
-        /* 手機 */
-        @media (max-width:768px){
+    /* 購物車 */
+    .floating-cart-btn{
+        position:fixed;
+        bottom:25px;
+        right:25px;
+        width:65px;
+        height:65px;
+        background:#ff5b75;
+        color:#fff;
+        border-radius:50%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:26px;
+        border:none;
+    }
 
-            .card-body{ padding:10px !important; }
-
-            .btn{
-                font-size:12px;
-                padding:4px 8px !important;
-            }
-
-            .floating-cart-btn{
-                width:58px;
-                height:58px;
-                font-size:22px;
-                right:18px;
-                bottom:18px;
-            }
-
-            #cartSidebar{ width:90%; }
-        }
-
-        /* 購物車 */
-        .floating-cart-btn{
-            position:fixed;
-            bottom:30px;
-            right:30px;
-            width:65px;
-            height:65px;
-            background:#ff5b75;
-            color:#fff;
-            border:none;
-            border-radius:50%;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-size:26px;
-            z-index:1050;
-        }
-
-        .cart-badge{
-            position:absolute;
-            top:-2px;
-            right:-2px;
-            background:#fff;
-            color:#ff5b75;
-            border:2px solid #ff5b75;
-            border-radius:50%;
-            font-size:12px;
-            padding:2px 7px;
-        }
+    .cart-badge{
+        position:absolute;
+        top:-2px;
+        right:-2px;
+        background:#fff;
+        color:#ff5b75;
+        border-radius:50%;
+        border:2px solid #ff5b75;
+        font-size:12px;
+        padding:2px 6px;
+    }
     </style>
 </head>
 
-    <body>
+<body>
 
-        <!-- NAVBAR -->
-        <nav class="navbar sticky-top">
-            <div class="container d-flex justify-content-between align-items-center">
+    <!-- NAV -->
+    <nav class="navbar sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand fw-bold text-danger">✨ 小卡專賣店</a>
+        <div class="fw-bold text-danger">✨ 小卡商店</div>
 
-            <!-- 桌機 -->
-            <div id="auth-zone" class="d-none d-lg-flex gap-2">
+        <!-- 桌機登入 -->
+        <div id="auth-zone" class="d-none d-lg-flex gap-2">
             <input id="loginEmail" class="form-control form-control-sm" placeholder="Email" style="width:150px;">
             <input id="loginPwd" type="password" class="form-control form-control-sm" placeholder="密碼" style="width:120px;">
-            <button class="btn btn-sm btn-primary" onclick="handleLogin()">登入</button>
+            <button class="btn btn-primary btn-sm" onclick="handleLogin()">登入</button>
             <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#regModal">註冊</button>
-            </div>
+        </div>
 
-            <!-- 手機 -->
-            <div class="d-flex d-lg-none gap-2">
-            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
-            <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#regModal">註冊</button>
-            </div>
+        <!-- 手機登入 -->
+        <div id="mobile-auth" class="d-flex d-lg-none gap-2">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
+            <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#regModal">註冊</button>
+        </div>
 
-            <!-- 登入後 -->
-            <div id="user-zone" class="d-none">
+        <!-- 已登入 -->
+        <div id="user-zone" class="d-none">
             🟢 <span id="current-user-name"></span>
             <button class="btn btn-sm btn-secondary" onclick="handleLogout()">登出</button>
-            </div>
-
-            </div>
-        </nav>
-
-        <!-- HERO -->
-        <div class="container text-center hero-section mb-4">
-        <h2>明星小卡專屬賣場</h2>
-        <p>點擊小卡右下角圖示加入購物車，下單前請先註冊並登入</p>
         </div>
+
+        </div>
+    </nav>
 
         <div class="container mb-5">
         <h3 class="fw-bold mb-3">🌟 現貨區</h3>
@@ -216,155 +179,165 @@
 
 
         <!-- 購物車 -->
-        <button class="floating-cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
-        🛒 <span id="cart-badge-count" class="cart-badge d-none">0</span>
+        <button class="floating-cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cart">
+        🛒 <span id="cart-badge" class="cart-badge d-none">0</span>
         </button>
 
-        <div class="offcanvas offcanvas-end" id="cartSidebar">
-            <div class="offcanvas-header bg-danger text-white">
-                <h5>購物車</h5>
-                <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-            </div>
-
-            <div class="offcanvas-body">
-                <div id="cart-list">空的</div>
-                <hr>
-                總計：$<span id="cart-total">0</span>
-                <button class="btn btn-danger w-100 mt-3" onclick="checkoutCart()">下單</button>
-            </div>
+        <div class="offcanvas offcanvas-end" id="cart">
+        <div class="offcanvas-header bg-danger text-white">
+        <h5>購物車</h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
 
-        <!-- 註冊 -->
-        <div class="modal fade" id="regModal">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content p-3">
-                    <form id="regForm">
-                        <input id="regName" class="form-control mb-2" placeholder="暱稱">
-                        <input id="regEmail" class="form-control mb-2" placeholder="Email">
-                        <input id="regphone" class="form-control mb-2" placeholder="電話">
-                        <input id="regpwd" class="form-control mb-2" placeholder="密碼">
-                        <button class="btn btn-primary w-100">註冊</button>
-                    </form>
-                </div>
-            </div>
+        <div class="offcanvas-body">
+        <div id="cart-list">空</div>
+        <hr>
+        總計：$<span id="total">0</span>
+        <button class="btn btn-danger w-100 mt-3" onclick="checkout()">下單</button>
+        </div>
         </div>
 
         <!-- 手機登入 -->
         <div class="modal fade" id="loginModal">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content p-3">
-                    <input id="m_loginEmail" class="form-control mb-2" placeholder="Email">
-                    <input id="m_loginPwd" type="password" class="form-control mb-2" placeholder="密碼">
-                    <button class="btn btn-primary w-100" onclick="handleLoginFromModal()">登入</button>
-                </div>
-            </div>
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content p-3">
+        <input id="m_email" class="form-control mb-2" placeholder="Email">
+        <input id="m_pwd" type="password" class="form-control mb-2" placeholder="密碼">
+        <button class="btn btn-primary w-100" onclick="loginMobile()">登入</button>
+        </div>
+        </div>
+        </div>
+
+        <!-- 註冊 -->
+        <div class="modal fade" id="regModal">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content p-3">
+        <input id="r_name" class="form-control mb-2" placeholder="暱稱">
+        <input id="r_email" class="form-control mb-2" placeholder="Email">
+        <input id="r_phone" class="form-control mb-2" placeholder="電話">
+        <input id="r_pwd" class="form-control mb-2" placeholder="密碼">
+        <button class="btn btn-primary w-100" onclick="register()">註冊</button>
+        </div>
+        </div>
         </div>
 
         <script>
-            const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec";
-            let currentUser = null;
-            let cart = [];
+        const API = "https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec";
 
-            /* 桌機登入 */
-            async function handleLogin(){
-            loginCommon("loginEmail","loginPwd");
+        let user=null;
+        let cart=[];
+
+        /* 桌機登入 */
+        async function handleLogin(){
+        loginCore("loginEmail","loginPwd");
+        }
+
+        /* 手機登入 */
+        async function loginMobile(){
+        loginCore("m_email","m_pwd");
+        }
+
+        /* 共用登入 */
+        async function loginCore(e,p){
+
+            const email=document.getElementById(e).value;
+            const pwd=document.getElementById(p).value;
+
+            const fd=new URLSearchParams();
+            fd.append("type","login");
+            fd.append("email",email);
+            fd.append("pwd",pwd);
+
+            const res=await fetch(API,{method:"POST",body:fd});
+            const r=await res.json();
+
+            if (r.success) {
+
+                user = { name: r.name, email };
+
+                document.getElementById("auth-zone")?.classList.add("d-none");
+                document.getElementById("mobile-auth")?.classList.add("d-none");
+
+                document.getElementById("user-zone")?.classList.remove("d-none");
+                document.getElementById("current-user-name").innerText = r.name;
+
+                alert("登入成功");
+
+            } else {
+                alert(r.message);
             }
+        }
 
-            /* 手機登入 */
-            async function handleLoginFromModal(){
-            loginCommon("m_loginEmail","m_loginPwd");
-            }
+        /* 登出 */
+        function handleLogout(){
 
-            /* 共用登入 */
-            async function loginCommon(emailId,pwdId){
+        user=null;
 
-            const email = document.getElementById(emailId).value;
-            const pwd = document.getElementById(pwdId).value;
+        document.getElementById("auth-zone").classList.remove("d-none");
+        document.getElementById("mobile-auth").classList.remove("d-none");
+        document.getElementById("user-zone").classList.add("d-none");
+        }
 
-            const formData = new URLSearchParams();
-            formData.append("type","login");
-            formData.append("email",email);
-            formData.append("pwd",pwd);
-
-            const res = await fetch(GOOGLE_API_URL,{method:"POST",body:formData});
-            const result = await res.json();
-
-            if(result.success){
-            currentUser = {name:result.name,email};
-
-            document.getElementById("auth-zone").classList.add("d-none");
-            document.getElementById("user-zone").classList.remove("d-none");
-            document.getElementById("current-user-name").innerText = result.name;
-
-            alert("登入成功");
-            }else{
-            alert(result.message);
-            }
-            }
-
-            /* 登出 */
-            function handleLogout(){
-            currentUser=null;
-            document.getElementById("auth-zone").classList.remove("d-none");
-            document.getElementById("user-zone").classList.add("d-none");
-            }
-
-            /* 註冊 */
-            document.getElementById("regForm").addEventListener("submit",async(e)=>{
-            e.preventDefault();
+        /* 註冊 */
+        async function register(){
 
             const fd=new URLSearchParams();
             fd.append("type","register");
-            fd.append("name",regName.value);
-            fd.append("email",regEmail.value);
-            fd.append("phone",regphone.value);
-            fd.append("pwd",regpwd.value);
+            fd.append("name",document.getElementById("r_name").value);
+            fd.append("email",document.getElementById("r_email").value);
+            fd.append("phone",document.getElementById("r_phone").value);
+            fd.append("pwd",document.getElementById("r_pwd").value);
 
-            await fetch(GOOGLE_API_URL,{method:"POST",body:fd});
+            await fetch(API,{method:"POST",body:fd});
             alert("註冊成功");
-            });
+        }
 
-            /* 購物車 */
-            function addToCart(name,price){
-            let item=cart.find(i=>i.name===name);
-            if(item)item.qty++;
-            else cart.push({name,price,qty:1});
-            renderCart();
-            }
+        /* 購物車 */
+        function addToCart(n,p){
 
-            function renderCart(){
-            let html="",total=0,qty=0;
+        let i=cart.find(x=>x.name===n);
+        if(i)i.qty++;
+        else cart.push({name:n,price:p,qty:1});
 
-            cart.forEach(i=>{
-            html+=`<div>${i.name} x${i.qty} $${i.price*i.qty}</div>`;
-            total+=i.price*i.qty;
-            qty+=i.qty;
-            });
+        render();
+        }
 
-            document.getElementById("cart-list").innerHTML=html;
-            document.getElementById("cart-total").innerText=total;
+        function render(){
 
-            const badge=document.getElementById("cart-badge-count");
-            badge.innerText=qty;
-            badge.classList.remove("d-none");
-            }
+        let h="",t=0,q=0;
 
-            /* 下單 */
-            async function checkoutCart(){
-            if(!currentUser)return alert("先登入");
-            if(cart.length===0)return alert("空的");
+        cart.forEach(i=>{
+        h+=`<div>${i.name} x${i.qty}</div>`;
+        t+=i.price*i.qty;
+        q+=i.qty;
+        });
 
-            const fd=new URLSearchParams();
-            fd.append("type","order");
-            fd.append("buyerEmail",currentUser.email);
-            fd.append("cartItems",JSON.stringify(cart));
-            fd.append("total",document.getElementById("cart-total").innerText);
+        document.getElementById("cart-list").innerHTML=h;
+        document.getElementById("total").innerText=t;
 
-            await fetch(GOOGLE_API_URL,{method:"POST",body:fd});
-            alert("下單成功");
-            cart=[];
-            renderCart();
-            }
+        let b=document.getElementById("cart-badge");
+        b.innerText=q;
+        b.classList.remove("d-none");
+        }
+
+        /* 下單 */
+        async function checkout(){
+
+        if(!user) return alert("先登入");
+        if(cart.length==0) return alert("空的");
+
+        const fd=new URLSearchParams();
+        fd.append("type","order");
+        fd.append("buyerEmail",user.email);
+        fd.append("cartItems",JSON.stringify(cart));
+        fd.append("total",document.getElementById("total").innerText);
+
+        await fetch(API,{method:"POST",body:fd});
+
+        alert("下單成功");
+        cart=[];
+        render();
+        }
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
