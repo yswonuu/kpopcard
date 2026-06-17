@@ -222,118 +222,135 @@ body{
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec";
+    const API = "https://script.google.com/macros/s/AKfycbwlxR9mNoFhhC-Tp7pHXtcIov9YECTOh8nAk3XKA69SoOhJRMYmIU4_ZT8jru-NDZQJTw/exec";
 
-let user = null;
-let cart = [];
+    let user = null;
 
-/* 登入 */
-async function handleLogin(){
-loginCore("loginEmail","loginPwd");
-}
+    /* 🔥 初始化：檢查 localStorage */
+    window.addEventListener("load", () => {
+        const saved = localStorage.getItem("user");
+        if (saved) {
+            user = JSON.parse(saved);
+            showUser();
+        }
+    });
 
-async function loginMobile(){
-loginCore("m_email","m_pwd");
-}
+    /* 🔑 LOGIN（桌機 + 手機共用） */
+    async function handleLogin(){
 
-async function loginCore(e,p){
+        const email = document.getElementById("loginEmail").value;
+        const pwd = document.getElementById("loginPwd").value;
 
-const email = document.getElementById(e).value;
-const pwd = document.getElementById(p).value;
+        const fd = new URLSearchParams();
+        fd.append("type","login");
+        fd.append("email",email);
+        fd.append("pwd",pwd);
 
-const fd = new URLSearchParams();
-fd.append("type","login");
-fd.append("email",email);
-fd.append("pwd",pwd);
+        const res = await fetch(API,{method:"POST",body:fd});
+        const r = await res.json();
 
-const res = await fetch(API,{method:"POST",body:fd});
-const r = await res.json();
+        if(r.success){
 
-if(r.success){
+            user = { name:r.name, email };
 
-user = {name:r.name,email};
+            localStorage.setItem("user", JSON.stringify(user));
 
-document.getElementById("auth-zone").classList.add("d-none");
-document.getElementById("mobile-auth").classList.add("d-none");
-document.getElementById("user-zone").classList.remove("d-none");
-document.getElementById("current-user-name").innerText = r.name;
+            showUser();
 
-alert("登入成功");
+            alert("登入成功");
+        }else{
+            alert(r.message);
+        }
+    }
 
-}else{
-alert(r.message);
-}
-}
+    /* 👤 顯示登入後 UI */
+    function showUser(){
 
-/* 登出 */
-function handleLogout(){
-user = null;
+        document.getElementById("auth-zone").classList.add("d-none");
+        document.getElementById("mobile-auth").classList.add("d-none");
+        document.getElementById("user-zone").classList.remove("d-none");
 
-document.getElementById("auth-zone").classList.remove("d-none");
-document.getElementById("mobile-auth").classList.remove("d-none");
-document.getElementById("user-zone").classList.add("d-none");
-}
+        document.getElementById("current-user-name").innerText = user.name;
+    }
 
-/* 註冊 */
-async function register(){
+    /* 🚪 登出 */
+    function handleLogout(){
 
-const fd = new URLSearchParams();
-fd.append("type","register");
-fd.append("name",document.getElementById("r_name").value);
-fd.append("email",document.getElementById("r_email").value);
-fd.append("phone",document.getElementById("r_phone").value);
-fd.append("pwd",document.getElementById("r_pwd").value);
+        user = null;
+        localStorage.removeItem("user");
 
-await fetch(API,{method:"POST",body:fd});
-alert("註冊成功");
-}
+        document.getElementById("auth-zone").classList.remove("d-none");
+        document.getElementById("mobile-auth").classList.remove("d-none");
+        document.getElementById("user-zone").classList.add("d-none");
+    }
 
-/* 購物車 */
-function addToCart(name,price){
+    /* 📝 註冊 */
+    async function register(){
 
-let item = cart.find(i=>i.name===name);
-if(item) item.qty++;
-else cart.push({name,price,qty:1});
+        const fd = new URLSearchParams();
+        fd.append("type","register");
+        fd.append("name",document.getElementById("r_name").value);
+        fd.append("email",document.getElementById("r_email").value);
+        fd.append("phone",document.getElementById("r_phone").value);
+        fd.append("pwd",document.getElementById("r_pwd").value);
 
-render();
-}
+        await fetch(API,{method:"POST",body:fd});
 
-function render(){
+        alert("註冊成功");
+    }
 
-let html = "", total = 0, qty = 0;
+    /* 🛒 購物車 */
+    let cart = [];
 
-cart.forEach(i=>{
-html += `<div>${i.name} x${i.qty}</div>`;
-total += i.price*i.qty;
-qty += i.qty;
-});
+    function addToCart(name, price){
 
-document.getElementById("cart-list").innerHTML = html;
-document.getElementById("total").innerText = total;
+        let item = cart.find(i=>i.name===name);
 
-const b = document.getElementById("cart-badge");
-b.innerText = qty;
-b.classList.remove("d-none");
-}
+        if(item) item.qty++;
+        else cart.push({name,price,qty:1});
 
-/* 下單 */
-async function checkout(){
+        renderCart();
+    }
 
-if(!user) return alert("請先登入");
-if(cart.length===0) return alert("空的");
+    function renderCart(){
 
-const fd = new URLSearchParams();
-fd.append("type","order");
-fd.append("buyerEmail",user.email);
-fd.append("cartItems",JSON.stringify(cart));
-fd.append("total",document.getElementById("total").innerText);
+        let html = "";
+        let total = 0;
+        let qty = 0;
 
-await fetch(API,{method:"POST",body:fd});
+        cart.forEach(i=>{
+            html += `<div>${i.name} x${i.qty}</div>`;
+            total += i.price*i.qty;
+            qty += i.qty;
+        });
 
-alert("下單成功");
-cart = [];
-render();
-}
+        document.getElementById("cart-list").innerHTML = html;
+        document.getElementById("total").innerText = total;
+
+        const badge = document.getElementById("cart-badge");
+        badge.innerText = qty;
+        badge.classList.remove("d-none");
+    }
+
+    /* 📦 下單（Google Sheet） */
+    async function checkout(){
+
+        if(!user) return alert("先登入");
+        if(cart.length===0) return alert("購物車是空的");
+
+        const fd = new URLSearchParams();
+        fd.append("type","order");
+        fd.append("buyerEmail",user.email);
+        fd.append("cartItems",JSON.stringify(cart));
+        fd.append("total",document.getElementById("total").innerText);
+
+        await fetch(API,{method:"POST",body:fd});
+
+        alert("下單成功");
+
+        cart = [];
+        renderCart();
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
